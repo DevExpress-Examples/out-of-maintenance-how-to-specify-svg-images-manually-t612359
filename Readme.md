@@ -1,3 +1,9 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [MainWindow.xaml](./CS/SpecifySVGImagesManually/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/SpecifySVGImagesManually/MainWindow.xaml))
+* [MainWindow.xaml.cs](./CS/SpecifySVGImagesManually/MainWindow.xaml.cs) (VB: [MainWindow.xaml](./VB/SpecifySVGImagesManually/MainWindow.xaml))
+<!-- default file list end -->
 # How to specify SVG images manually
 
 
