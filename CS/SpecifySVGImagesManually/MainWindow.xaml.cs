@@ -1,4 +1,4 @@
-﻿using DevExpress.Xpf.Core;
+using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Native;
 using System;
 using System.Collections.Generic;
@@ -15,12 +15,6 @@ namespace SpecifySVGImagesManually {
         }
     }
     public class SvgImageSourceConverterExtension : MarkupExtension, IValueConverter {
-        class UriStreamHelper : SvgImageSourceExtension {
-            public static Stream GetStream(Uri uri) {
-                return CreateRequestAndGetResponseStream(uri);
-            }
-        }
-
         readonly Uri baseUri;
         readonly UriTypeConverter uriConverter;
         
@@ -39,11 +33,8 @@ namespace SpecifySVGImagesManually {
             if (uri == null)
                 return null;
             var absoluteUri = uri.IsAbsoluteUri ? uri : new Uri(baseUri, uri);
-            using(var stream = UriStreamHelper.GetStream(absoluteUri)) {
-                object unused = null;
-                var image = SvgImageHelper.GetOrCreateSvgImage(stream, ref unused);
-                return WpfSvgRenderer.CreateImageSource(image, 1d, null, null, true);
-            }
+            var image = SvgImageHelper.CreateImage(absoluteUri);
+            return WpfSvgRenderer.CreateImageSource(image, 1d, null, null, true);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
