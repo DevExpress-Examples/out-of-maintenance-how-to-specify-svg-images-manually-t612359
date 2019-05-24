@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
@@ -17,7 +18,7 @@ namespace SpecifySVGImagesManually {
     public class SvgImageSourceConverterExtension : MarkupExtension, IValueConverter {
         class UriStreamHelper : SvgImageSourceExtension {
             public static Stream GetStream(Uri uri) {
-                return CreateRequestAndGetResponseStream(uri);
+                return Application.GetResourceStream(uri).Stream;
             }
         }
 
