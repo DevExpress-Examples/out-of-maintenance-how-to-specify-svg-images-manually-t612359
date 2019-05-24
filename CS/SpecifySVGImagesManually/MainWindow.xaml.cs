@@ -40,8 +40,7 @@ namespace SpecifySVGImagesManually {
                 return null;
             var absoluteUri = uri.IsAbsoluteUri ? uri : new Uri(baseUri, uri);
             using(var stream = UriStreamHelper.GetStream(absoluteUri)) {
-                object unused = null;
-                var image = SvgImageHelper.GetOrCreateSvgImage(stream, ref unused);
+                var image = DevExpress.Utils.Svg.SvgLoader.LoadFromStream(stream);
                 return WpfSvgRenderer.CreateImageSource(image, 1d, null, null, true);
             }
         }
