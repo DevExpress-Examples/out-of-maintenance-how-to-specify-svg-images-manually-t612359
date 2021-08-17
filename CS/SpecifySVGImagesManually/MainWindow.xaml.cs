@@ -1,17 +1,16 @@
-using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Core.Native;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
-using System.IO;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace SpecifySVGImagesManually {    
+namespace SpecifySVGImagesManually
+{
     public partial class MainWindow{
         public MainWindow() {
             InitializeComponent();
-            DataContext = new List<String>() { "Images/First.svg", "Images/Last.svg" };
+            DataContext = new ObservableCollection<String>() { "Images/First.svg", "Images/Last.svg" };
         }
     }
     public class SvgImageSourceConverterExtension : MarkupExtension, IValueConverter {
@@ -33,8 +32,7 @@ namespace SpecifySVGImagesManually {
             if (uri == null)
                 return null;
             var absoluteUri = uri.IsAbsoluteUri ? uri : new Uri(baseUri, uri);
-            var image = SvgImageHelper.CreateImage(absoluteUri);
-            return WpfSvgRenderer.CreateImageSource(image, 1d, null, null, true);
+            return WpfSvgRenderer.CreateImageSource(absoluteUri);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
