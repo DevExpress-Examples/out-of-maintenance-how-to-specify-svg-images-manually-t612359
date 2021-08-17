@@ -1,9 +1,7 @@
-﻿Imports DevExpress.Xpf.Core
-Imports DevExpress.Xpf.Core.Native
+﻿Imports DevExpress.Xpf.Core.Native
 Imports System
-Imports System.Collections.Generic
+Imports System.Collections.ObjectModel
 Imports System.Globalization
-Imports System.IO
 Imports System.Windows.Data
 Imports System.Windows.Markup
 
@@ -11,7 +9,7 @@ Namespace SpecifySVGImagesManually
 	Partial Public Class MainWindow
 		Public Sub New()
 			InitializeComponent()
-			DataContext = New List(Of String)() From {"Images/First.svg", "Images/Last.svg"}
+			DataContext = New ObservableCollection(Of String)() From {"Images/First.svg", "Images/Last.svg"}
 		End Sub
 	End Class
 	Public Class SvgImageSourceConverterExtension
@@ -34,13 +32,12 @@ Namespace SpecifySVGImagesManually
 		End Function
 
 		Public Function Convert(ByVal value As Object, ByVal targetType As Type, ByVal parameter As Object, ByVal culture As CultureInfo) As Object Implements IValueConverter.Convert
-			Dim uri = TryCast(uriConverter.ConvertFrom(value), Uri)
+			Dim uri As Uri = TryCast(uriConverter.ConvertFrom(value), Uri)
 			If uri Is Nothing Then
 				Return Nothing
 			End If
 			Dim absoluteUri = If(uri.IsAbsoluteUri, uri, New Uri(baseUri, uri))
-			Dim image = SvgImageHelper.CreateImage(absoluteUri)
-			Return WpfSvgRenderer.CreateImageSource(image, 1R, Nothing, Nothing, True)
+			Return WpfSvgRenderer.CreateImageSource(absoluteUri)
 		End Function
 
 		Public Function ConvertBack(ByVal value As Object, ByVal targetType As Type, ByVal parameter As Object, ByVal culture As CultureInfo) As Object Implements IValueConverter.ConvertBack
